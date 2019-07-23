@@ -5,22 +5,38 @@ using UnityEngine.InputSystem;
 
 public class MovePlayer : MonoBehaviour
 {
+    [SerializeField] private float _moveSpeed;
+    private Vector2 _moveVector2_;
+    private InputMap _inputMap_;
 
-    [SerializeField] private InputMap _inputMap;
+
+    private void Awake()
+    {
+        _inputMap_ = new InputMap();
+    }
+
+
+    private void Update()
+    {
+        this.transform.position += new Vector3( _moveVector2_.x, 0, _moveVector2_.y) * _moveSpeed * Time.deltaTime;
+    }
 
 
     private void OnEnable()
     {
-        _inputMap.Player.Move.performed += Move;
+        _inputMap_.Player.Move.performed += HandleMove;
+        _inputMap_.Player.Move.Enable();
     }
 
     private void OnDisable()
     {
-        _inputMap.Player.Move.performed -= Move;
+        _inputMap_.Player.Move.performed -= HandleMove;
+        _inputMap_.Player.Move.Disable();
     }
 
-    private void Move(InputAction.CallbackContext obj)
+    private void HandleMove(InputAction.CallbackContext obj)
     {
+        _moveVector2_ = obj.ReadValue<Vector2>();
         Debug.Log("moved");
     }
 }

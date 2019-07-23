@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "7ad1fd66-64de-465c-92fc-655bd6b88a0a",
                     "expectedControlType": "",
                     "processors": "",
@@ -15,17 +15,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "70f4fc9c-6599-4c30-991e-31e6e8cb8727",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "AZERTY",
                     "id": "0f7d9e9e-997c-4df5-bba4-73427f174679",
@@ -104,17 +93,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
-                    "id": "e9a0f3dd-e435-4e6d-9160-d89edaf9c8d6",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "left",
                     "id": "2621245e-8910-4d24-bae3-92f5146e1a38",
                     "path": "<Keyboard>/a",
@@ -124,17 +102,33 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "461db9db-c8b4-4169-9a3a-c532d78d6bd2",
+            "actions": [
                 {
-                    "name": "right",
-                    "id": "57bcf3c4-19db-42ce-97cb-0852e267d548",
-                    "path": "<Keyboard>/d",
+                    "name": "TPS",
+                    "type": "PassThrough",
+                    "id": "f316ce9e-4434-479a-973d-c62e7b3dc5ed",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "901e16e7-33cf-4ea7-afd3-7d55e800e8bc",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "TPS",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }

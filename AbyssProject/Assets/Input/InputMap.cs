@@ -19,7 +19,7 @@ public class InputMap : IInputActionCollection
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""7ad1fd66-64de-465c-92fc-655bd6b88a0a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
@@ -27,17 +27,6 @@ public class InputMap : IInputActionCollection
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""70f4fc9c-6599-4c30-991e-31e6e8cb8727"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""AZERTY"",
                     ""id"": ""0f7d9e9e-997c-4df5-bba4-73427f174679"",
@@ -116,17 +105,6 @@ public class InputMap : IInputActionCollection
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""e9a0f3dd-e435-4e6d-9160-d89edaf9c8d6"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""left"",
                     ""id"": ""2621245e-8910-4d24-bae3-92f5146e1a38"",
                     ""path"": ""<Keyboard>/a"",
@@ -136,17 +114,33 @@ public class InputMap : IInputActionCollection
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""461db9db-c8b4-4169-9a3a-c532d78d6bd2"",
+            ""actions"": [
                 {
-                    ""name"": ""right"",
-                    ""id"": ""57bcf3c4-19db-42ce-97cb-0852e267d548"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""name"": ""TPS"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""f316ce9e-4434-479a-973d-c62e7b3dc5ed"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""901e16e7-33cf-4ea7-afd3-7d55e800e8bc"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""TPS"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -156,6 +150,9 @@ public class InputMap : IInputActionCollection
         // Player
         m_Player = asset.GetActionMap("Player");
         m_Player_Move = m_Player.GetAction("Move");
+        // Camera
+        m_Camera = asset.GetActionMap("Camera");
+        m_Camera_TPS = m_Camera.GetAction("TPS");
     }
 
     ~InputMap()
@@ -234,8 +231,45 @@ public class InputMap : IInputActionCollection
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private ICameraActions m_CameraActionsCallbackInterface;
+    private readonly InputAction m_Camera_TPS;
+    public struct CameraActions
+    {
+        private InputMap m_Wrapper;
+        public CameraActions(InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @TPS => m_Wrapper.m_Camera_TPS;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void SetCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+            {
+                TPS.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnTPS;
+                TPS.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnTPS;
+                TPS.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnTPS;
+            }
+            m_Wrapper.m_CameraActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                TPS.started += instance.OnTPS;
+                TPS.performed += instance.OnTPS;
+                TPS.canceled += instance.OnTPS;
+            }
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnTPS(InputAction.CallbackContext context);
     }
 }

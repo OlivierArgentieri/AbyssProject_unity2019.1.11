@@ -211,6 +211,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &648697137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3532134952851858291, guid: 6c865b0fcec2bab41a707e66c8f66e4b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3532134954504809933}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1986816277
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +228,7 @@ GameObject:
   - component: {fileID: 1986816280}
   - component: {fileID: 1986816279}
   - component: {fileID: 1986816278}
+  - component: {fileID: 1986816281}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -287,13 +294,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986816277}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.12746042, y: -0.0029805372, z: 0.0003825932, w: 0.9918392}
+  m_LocalPosition: {x: -0.18559258, y: 5.4307966, z: -6.987896}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1986816281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986816277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61110de56fd78cf49b143b7331e63e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_camera_sensibility: 0.5
+  m_distance_camera: 5
+  m_player_: {fileID: 648697137}
 --- !u!1 &2114206663
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +479,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156523816718040851, guid: 6c865b0fcec2bab41a707e66c8f66e4b,
+        type: 3}
+      propertyPath: _moveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532134954447384306, guid: 6c865b0fcec2bab41a707e66c8f66e4b,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 853373527253921907, guid: 6c865b0fcec2bab41a707e66c8f66e4b,
+        type: 3}
+      propertyPath: _moveSpeed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 784602827644625037, guid: 6c865b0fcec2bab41a707e66c8f66e4b, type: 3}
