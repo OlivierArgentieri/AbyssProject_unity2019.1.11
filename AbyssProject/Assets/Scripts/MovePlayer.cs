@@ -2,41 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
-public class MovePlayer : MonoBehaviour
+public class MovePlayer : MonoBehaviour, InputMap.IPlayerActions
 {
-    [SerializeField] private float _moveSpeed;
-    private Vector2 _moveVector2_;
-    private InputMap _inputMap_;
-
-
-    private void Awake()
-    {
-        _inputMap_ = new InputMap();
-    }
-
+    [SerializeField] private float m_moveSpeed;
+    private Vector2 m_moveVector2_;
+    private InputMap m_inputMap_;
 
     private void Update()
     {
-        this.transform.position += new Vector3( _moveVector2_.x, 0, _moveVector2_.y) * _moveSpeed * Time.deltaTime;
+        this.transform.position += new Vector3( m_moveVector2_.x, 0, m_moveVector2_.y) * m_moveSpeed * Time.deltaTime;
     }
 
 
     private void OnEnable()
     {
-        _inputMap_.Player.Move.performed += HandleMove;
-        _inputMap_.Player.Move.Enable();
+        if(m_inputMap_ == null)
+            m_inputMap_ = new InputMap();
+        m_inputMap_.Player.Move.performed += this.OnMove;
+        m_inputMap_.Player.Move.Enable();
     }
 
     private void OnDisable()
     {
-        _inputMap_.Player.Move.performed -= HandleMove;
-        _inputMap_.Player.Move.Disable();
+        m_inputMap_.Player.Move.performed -= this.OnMove;
+        m_inputMap_.Player.Move.Disable();
     }
 
-    private void HandleMove(InputAction.CallbackContext obj)
+
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _moveVector2_ = obj.ReadValue<Vector2>();
+        m_moveVector2_ = context.ReadValue<Vector2>();
         Debug.Log("moved");
     }
 }
